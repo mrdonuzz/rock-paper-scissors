@@ -1,45 +1,119 @@
+// ประกาศตัวแปรเริ่มต้น
+const rockBtn = document.getElementById('rock-btn');
+const scissorsBtn = document.getElementById('scissors-btn');
+const paperBtn = document.getElementById('paper-btn');
+const imageChoicePlayer = document.getElementById('img-choice-p')
+const imageChoiceComputer = document.getElementById('img-choice-c')
+const resultText = document.getElementById('result-text')
+const pScore = document.getElementById('player-score')
+const cScore = document.getElementById('computer-score')
+const showResult = document.getElementById('result')
+const roundText = document.getElementById("round")
+let playerScore = 0
+let computerScore = 0
+let round = 0
+
+// รับค่าข้อมูลจากคอมพิวเตอร์
 function getComputerChoice() {
-    const choice = ["Rock","Paper","Scissor"]
+    const choice = ["rock","paper","scissor"]
     const randomChoice = Math.floor(Math.random() * choice.length)
     return choice[randomChoice]
 }
 
-function playRound(playerSelection, computerSelection) {
-    playerSelection = playerSelection.toUpperCase()
-    computerSelection = computerSelection.toUpperCase()
+// โชว์รูปภาพตัวเลือกของผู้เล่น
+const showPlayerChoice = (playerChoice) => {
+    const choice = {
+        "ROCK" : "./img/icons8-hand-rock-100.png",
+        "SCISSOR" : "./img/icons8-hand-peace-100.png",
+        "PAPER" : "./img/icons8-stop-gesture-100.png"
+    }
+
+    // กำหนด imageSrc มีค่าเท่ากับ Object ของตัวเลือกผู้เล่น
+    const imageSrc = choice[playerChoice];
+    if (imageSrc) { // เช็คว่ามีค่าหรือไม่ ? (truthy or falsy)
+        imageChoicePlayer.src = imageSrc;
+    }
+}
+
+// โชว์รูปภาพตัวเลือกของคอมพิวเตอร์
+const showComputerChoice = (computerChoice) => {
+    const choice = {
+        "ROCK" : "./img/icons8-hand-rock-100.png",
+        "SCISSOR" : "./img/icons8-hand-peace-100.png",
+        "PAPER" : "./img/icons8-stop-gesture-100.png"
+    }
+
+    const imageSrc = choice[computerChoice];
+    if (imageSrc) {
+        imageChoiceComputer.src = imageSrc;
+    }
+}
+
+// จุดเริ่มต้นการทำงาน
+function playGame(choice) {
+    const playerSelection = choice.toUpperCase()
+    const computerSelection = getComputerChoice().toUpperCase()
+    
+    round++
+
+    showPlayerChoice(playerSelection)
+    showComputerChoice(computerSelection)
+
+    roundText.textContent = `Round ${round}`
+
+    if (round <= 2) {
+        showResult.style.display = "flex"
+    }
     
     if (playerSelection === computerSelection){
-        console.log("It's a tie!")
-        return "It's a Tie!"
+        resultText.textContent = "เสมอจ้า อิอิ"
     } else if ((playerSelection === "ROCK" && computerSelection === "SCISSOR") ||
             (playerSelection === "SCISSOR" && computerSelection === "PAPER") ||
             (playerSelection === "PAPER" && computerSelection === "ROCK")) {
-        console.log(`You win this round! Computer chose ${computerSelection}.`) 
-        return "You win!"
+        playerScore++
+        resultText.textContent = "เจ๋งเป้ง ชนะแล้ว"
     } else {
-        console.log(`You lose this round! Computer chose ${computerSelection}.`)  
-        return "You lose!"
-    }
-}
-
-function playGame() {
-    let playerScore = 0
-    let computerScore = 0
-
-    for(let i = 0; i < 5; i++) {
-        const playerSelection = prompt("Enter Choice (Paper,Rock,Scissor) : ")
-        const computerSelection = getComputerChoice()
-        const roundResult = playRound(playerSelection, computerSelection)
-        console.log(`Round : ${i + 1} Result : ${roundResult}`)
-
-        if (roundResult === "You win!") {
-            playerScore++
-        } else if (roundResult === "You lose!") {
-            computerScore++
-        }
+        computerScore++
+        resultText.textContent = "บอทมันโกงผม"
     }
 
-    console.log(`Your Score : ${playerScore}, Computer Score: ${computerScore}`)
+    pScore.textContent = `Player : ${playerScore}`
+    cScore.textContent = `Player : ${computerScore}`
+
+    if (playerScore > 5) {
+        alert("มนุษยชาติเป็นฝ่ายชนะ!!")
+        let reset = confirm("ต้องการเริ่มเกมใหม่มั้ย ?")
+        reset ? resetGame() : resetGame()
+    } else if (computerScore > 5) {
+        alert("หุ่นยนต์จะล้างเผ่าพันธุ์มนุษย์!!")
+        let reset = confirm("ต้องการเริ่มเกมใหม่มั้ย ?")
+        reset ? resetGame() : resetGame()
+    }
+
 }
 
-playGame()
+const resetBtn = document.getElementById('reset-btn');
+
+const resetGame = () => {
+    round = 0;
+    playerScore = 0; 
+    computerScore = 0;
+    pScore.textContent = `Player : ${playerScore}`;
+    cScore.textContent = `Player : ${computerScore}`;
+    roundText.textContent = `Round ${round}`;
+    imageChoicePlayer.src = "";
+    imageChoiceComputer.src = "";
+    resultText.textContent = "";
+    showResult.style.display = "none";
+    roundText.style.display = "none"
+}
+
+rockBtn.addEventListener("click", () => {
+    playGame("rock")
+})
+scissorsBtn.addEventListener("click", () => {
+    playGame("scissor")
+})
+paperBtn.addEventListener("click", () => {
+    playGame("paper")
+})

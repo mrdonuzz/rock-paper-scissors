@@ -3,10 +3,45 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>RPS Games</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    
+    <div class="container">
+        <div class="rps-game">
+            <h1>RPS GAMES</h1>
+            <div class="choice-rps">
+                <button id="rock-btn">
+                    <img src="./img/icons8-hand-rock-100.png" alt="">
+                    <h3>Rock</h3>
+                </button>
+                <button id="scissors-btn">
+                    <img src="./img/icons8-hand-peace-100.png" alt="">
+                    <h3>Scissor</h3>
+                </button>
+                <button id="paper-btn">
+                    <img src="./img/icons8-stop-gesture-100.png" alt="">
+                    <h3>Paper</h3>
+                </button>
+            </div>
+            <p class="choose">Choose your choice</p>
+            <div id="result">
+                <div class="player">
+                    <p>Your choice :</p>
+                    <img id="img-choice-p" src="" alt="">
+                    <p id="player-score">Player :  0</p>
+                </div>
+                <h1 id="result-text"></h1>
+                <div class="computer">
+                    <p>Computer's choice :</p>
+                    <img id="img-choice-c" src="" alt="">
+                    <p id="computer-score">Computer : 0</p>
+                </div>
+            </div>
+            <p id="round"></p>
+            <button id="reset-btn">RESET</button>
+        </div>
+    </div>
     <script src="./app.js"></script>
 </body>
 </html>
