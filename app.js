@@ -63,6 +63,7 @@ function playGame(choice) {
 
     if (round <= 2) {
         showResult.style.display = "flex"
+        roundText.style.display = "flex"
     }
     
     if (playerSelection === computerSelection){
@@ -81,7 +82,7 @@ function playGame(choice) {
     console.log(computerScore)
 
     pScore.textContent = `Player : ${playerScore}`
-    cScore.textContent = `Player : ${computerScore}`
+    cScore.textContent = `Computer : ${computerScore}`
 
     if (playerScore > 5) {
         console.log(`ใน if ${playerScore}`)
@@ -95,8 +96,6 @@ function playGame(choice) {
         reset ? resetGame() : resetGame()
     }
 }
-
-const resetBtn = document.getElementById('reset-btn');
 
 const resetGame = () => {
     round = 0;
