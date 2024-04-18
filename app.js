@@ -77,19 +77,23 @@ function playGame(choice) {
         resultText.textContent = "บอทมันโกงผม"
     }
 
+    console.log(playerScore)
+    console.log(computerScore)
+
     pScore.textContent = `Player : ${playerScore}`
     cScore.textContent = `Player : ${computerScore}`
 
     if (playerScore > 5) {
+        console.log(`ใน if ${playerScore}`)
         alert("มนุษยชาติเป็นฝ่ายชนะ!!")
         let reset = confirm("ต้องการเริ่มเกมใหม่มั้ย ?")
         reset ? resetGame() : resetGame()
     } else if (computerScore > 5) {
+        console.log(`ใน if ${computerScore}`)
         alert("หุ่นยนต์จะล้างเผ่าพันธุ์มนุษย์!!")
         let reset = confirm("ต้องการเริ่มเกมใหม่มั้ย ?")
         reset ? resetGame() : resetGame()
     }
-
 }
 
 const resetBtn = document.getElementById('reset-btn');
